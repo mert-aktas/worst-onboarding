@@ -1,0 +1,374 @@
+/* ═══════════════════════════════════════════════════════
+   WORST ONBOARDING EVER — Game Wrapper Styles
+   The wrapper is BEAUTIFUL. The levels are TERRIBLE.
+   That's the joke.
+   ═══════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;1,9..40,400&display=swap');
+
+:root {
+  --game-bg: #0a0a0c;
+  --game-surface: #141418;
+  --game-border: #2a2a32;
+  --game-text: #e8e6e3;
+  --game-text-dim: #6b6976;
+  --game-accent: #ff4d4d;
+  --game-accent-glow: rgba(255, 77, 77, 0.3);
+  --game-success: #4dff91;
+  --font-display: 'Instrument Serif', serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--game-bg);
+  color: var(--game-text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.hidden { display: none !important; }
+
+/* ── Title Screen ──────────────────────────────────── */
+#title-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  padding: 2rem;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(255, 77, 77, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 80%, rgba(77, 150, 255, 0.05) 0%, transparent 50%),
+    var(--game-bg);
+}
+
+.title-badge {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--game-border);
+  border-radius: 100px;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--game-text-dim);
+  margin-bottom: 2rem;
+}
+
+.title-heading {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 6rem);
+  line-height: 1.05;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+  max-width: 700px;
+}
+
+.title-heading em {
+  color: var(--game-accent);
+  font-style: italic;
+}
+
+.title-tagline {
+  font-size: 1.15rem;
+  color: var(--game-text-dim);
+  margin-bottom: 3rem;
+  max-width: 420px;
+  line-height: 1.6;
+}
+
+#start-btn {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 1rem 3rem;
+  background: var(--game-accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 0 30px var(--game-accent-glow);
+}
+
+#start-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 50px var(--game-accent-glow);
+}
+
+.title-best {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--game-text-dim);
+}
+
+.title-footer {
+  position: absolute;
+  bottom: 2rem;
+  font-size: 0.75rem;
+  color: var(--game-text-dim);
+  opacity: 0.5;
+}
+
+.title-footer a {
+  color: var(--game-text-dim);
+  text-decoration: none;
+}
+
+.title-footer a:hover {
+  color: var(--game-text);
+}
+
+/* ── HUD ───────────────────────────────────────────── */
+#hud {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  background: rgba(10, 10, 12, 0.9);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--game-border);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.hud-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hud-label {
+  color: var(--game-text-dim);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.hud-value {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+}
+
+#hud-clicks {
+  color: var(--game-accent);
+}
+
+/* ── Transition Screen ─────────────────────────────── */
+#transition-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--game-bg);
+  animation: transitionIn 0.3s ease;
+}
+
+@keyframes transitionIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+#transition-level-num {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--game-accent);
+  margin-bottom: 1rem;
+}
+
+#transition-level-name {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+#transition-level-desc {
+  color: var(--game-text-dim);
+  font-size: 1rem;
+  font-style: italic;
+}
+
+/* ── End Screen ────────────────────────────────────── */
+#end-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba(77, 255, 145, 0.06) 0%, transparent 50%),
+    var(--game-bg);
+}
+
+.end-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  margin-bottom: 0.5rem;
+}
+
+.end-subtitle {
+  color: var(--game-text-dim);
+  font-size: 1rem;
+  margin-bottom: 3rem;
+}
+
+.end-stats {
+  display: flex;
+  gap: 3rem;
+  margin-bottom: 2rem;
+}
+
+.end-stat {
+  text-align: center;
+}
+
+.end-stat-value {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.end-stat-label {
+  font-size: 0.75rem;
+  color: var(--game-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.end-patience-label {
+  font-size: 1.1rem;
+  color: var(--game-accent);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.end-best {
+  font-size: 0.85rem;
+  color: var(--game-text-dim);
+  margin-bottom: 2.5rem;
+}
+
+.end-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+#share-btn {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  padding: 0.85rem 2rem;
+  background: var(--game-accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+#share-btn:hover {
+  box-shadow: 0 0 30px var(--game-accent-glow);
+}
+
+#play-again-btn {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  padding: 0.85rem 2rem;
+  background: transparent;
+  color: var(--game-text);
+  border: 1px solid var(--game-border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+#play-again-btn:hover {
+  border-color: var(--game-text-dim);
+}
+
+.end-cta {
+  margin-top: 3rem;
+  font-size: 0.85rem;
+  color: var(--game-text-dim);
+}
+
+.end-cta a {
+  color: var(--game-text-dim);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.end-cta a:hover {
+  color: var(--game-text);
+}
+
+/* ── Confetti ──────────────────────────────────────── */
+#confetti-container {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: -10px;
+  width: 10px;
+  height: 10px;
+  opacity: 0;
+  animation: confettiFall linear forwards;
+}
+
+@keyframes confettiFall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* ── Rage Click Flash ──────────────────────────────── */
+.rage-flash {
+  position: fixed;
+  z-index: 99999;
+  pointer-events: none;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--game-accent);
+  animation: rageFloat 0.6s ease-out forwards;
+}
+
+@keyframes rageFloat {
+  0% { opacity: 1; transform: translateY(0) scale(1); }
+  100% { opacity: 0; transform: translateY(-30px) scale(0.7); }
+}
+
+/* ── Level Containers ──────────────────────────────── */
+.level-container {
+  position: fixed;
+  inset: 0;
+  top: 48px; /* below HUD */
+  z-index: 100;
+  overflow: auto;
+}

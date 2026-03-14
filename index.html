@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Worst Onboarding Ever</title>
+  <meta name="description" content="How long can you survive the worst onboarding experience ever created? A browser game about everything wrong with user onboarding.">
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Social sharing -->
+  <meta property="og:title" content="Worst Onboarding Ever">
+  <meta property="og:description" content="How long can you survive? A browser game about everything wrong with user onboarding.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://worst-onboarding.userguiding.com">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/game.css">
+  <link rel="stylesheet" href="css/levels.css">
+</head>
+<body>
+
+  <!-- ═══ Title Screen ═══ -->
+  <div id="title-screen">
+    <span class="title-badge">A game about bad UX</span>
+    <h1 class="title-heading">Worst<br>Onboarding<br><em>Ever</em></h1>
+    <p class="title-tagline">Five levels of real onboarding anti-patterns. Your patience will be tested. Your rage clicks will be counted.</p>
+    <button id="start-btn">Start Onboarding</button>
+    <p class="title-best" id="title-best"></p>
+    <div class="title-footer">
+      <a href="https://userguiding.com" target="_blank" rel="noopener">Made by UserGuiding</a>
+    </div>
+  </div>
+
+  <!-- ═══ HUD ═══ -->
+  <div id="hud" class="hidden">
+    <div class="hud-item">
+      <span class="hud-label">Time</span>
+      <span class="hud-value" id="hud-timer">0:00</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">Level</span>
+      <span class="hud-value" id="hud-level">1 / 5</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">Rage Clicks</span>
+      <span class="hud-value" id="hud-clicks">0</span>
+    </div>
+  </div>
+
+  <!-- ═══ Transition Screen ═══ -->
+  <div id="transition-screen" class="hidden">
+    <span id="transition-level-num">Level 1</span>
+    <h2 id="transition-level-name">The Welcome Modal From Hell</h2>
+    <p id="transition-level-desc">Just let me in already.</p>
+  </div>
+
+  <!-- ═══ Level Containers ═══ -->
+  <div id="level-1" class="level-container hidden"></div>
+  <div id="level-2" class="level-container hidden"></div>
+  <div id="level-3" class="level-container hidden"></div>
+  <div id="level-4" class="level-container hidden"></div>
+  <div id="level-5" class="level-container hidden"></div>
+
+  <!-- ═══ End Screen ═══ -->
+  <div id="end-screen" class="hidden">
+    <div id="confetti-container"></div>
+    <h1 class="end-title">You Survived.</h1>
+    <p class="end-subtitle">Against all odds, you made it through the worst onboarding ever created.</p>
+
+    <div class="end-stats">
+      <div class="end-stat">
+        <span class="end-stat-value" id="end-time">0:00</span>
+        <span class="end-stat-label">Time</span>
+      </div>
+      <div class="end-stat">
+        <span class="end-stat-value" id="end-clicks">0</span>
+        <span class="end-stat-label">Rage Clicks</span>
+      </div>
+      <div class="end-stat">
+        <span class="end-stat-value" id="end-patience">0</span>
+        <span class="end-stat-label">Patience Score</span>
+      </div>
+    </div>
+
+    <p class="end-patience-label" id="end-patience-label">Zen Master</p>
+    <p class="end-best" id="end-best"></p>
+
+    <div class="end-actions">
+      <button id="share-btn">Share Your Suffering</button>
+      <button id="play-again-btn">Play Again</button>
+    </div>
+
+    <p class="end-cta">Think your onboarding is this bad? It might be. <a href="https://userguiding.com" target="_blank" rel="noopener">Fix it →</a></p>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/game.js"></script>
+  <script src="js/levels.js"></script>
+
+</body>
+</html>
