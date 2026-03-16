@@ -165,12 +165,25 @@ const Game = {
     const time = this.formatTime(this.timer);
     const clicks = this.rageClicks;
 
-    const text = `I just survived the Worst Onboarding Ever.\n\n⏱ ${time} minutes | 💀 ${clicks} rage clicks | Patience: "${label}"\n\nCan you beat me?\nhttps://mert-aktas.github.io/worst-onboarding/\n\n#WorstOnboardingEver`;
+    const text = `I just survived the Worst Onboarding Ever.\n\n⏱ ${time} minutes | 💀 ${clicks} rage clicks | Patience: "${label}"\n\nCan you beat me? Try here: https://mert-aktas.github.io/worst-onboarding/\n\n#WorstOnboardingEver`;
     const linkedInUrl = 'https://www.linkedin.com/feed/?shareActive=true&text=' + encodeURIComponent(text);
 
-    // Copy share image to clipboard, then open LinkedIn
+    // Copy share image to clipboard, then countdown, then open LinkedIn
     this.generateShareImage(time, clicks, patienceScore, label).then(() => {
-      window.open(linkedInUrl, '_blank', 'width=600,height=600');
+      const btn = document.getElementById('share-btn');
+      let countdown = 3;
+      const tick = () => {
+        const s = countdown === 1 ? 'second' : 'seconds';
+        btn.textContent = `Image copied! Just paste it in LinkedIn — Redirecting in ${countdown} ${s}`;
+        if (countdown === 0) {
+          btn.textContent = 'Share Your Victory on LinkedIn';
+          window.open(linkedInUrl, '_blank', 'width=600,height=600');
+          return;
+        }
+        countdown--;
+        setTimeout(tick, 1000);
+      };
+      tick();
     });
   },
 
@@ -245,13 +258,7 @@ const Game = {
         if (navigator.clipboard && window.ClipboardItem) {
           navigator.clipboard.write([
             new ClipboardItem({ 'image/png': blob })
-          ]).then(() => {
-            const btn = document.getElementById('share-btn');
-            const original = btn.textContent;
-            btn.textContent = 'Image copied! Paste it in LinkedIn →';
-            setTimeout(() => btn.textContent = original, 4000);
-            resolve();
-          }).catch(() => resolve());
+          ]).then(() => resolve()).catch(() => resolve());
         } else {
           resolve();
         }
