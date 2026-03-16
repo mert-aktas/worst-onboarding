@@ -160,18 +160,13 @@ const Game = {
 
   // ── Sharing ───────────────────────────────────────────
   share() {
-    const text = `I just survived the worst onboarding ever.\n⏱ ${this.formatTime(this.timer)} minutes | 💀 ${this.rageClicks} rage clicks\nCan you beat me? worst-onboarding.userguiding.com`;
+    const label = this.getPatienceLabel(
+      Math.max(0, Math.round(Math.max(0, 100 - (this.timer / 3)) - this.rageClicks * 0.5))
+    );
+    const text = `I just survived the Worst Onboarding Ever.\n\n⏱ ${this.formatTime(this.timer)} minutes | 💀 ${this.rageClicks} rage clicks | Patience: "${label}"\n\nCan you beat me?\nhttps://mert-aktas.github.io/worst-onboarding/\n\n#WorstOnboardingEver`;
+    const linkedInUrl = 'https://www.linkedin.com/feed/?shareActive=true&text=' + encodeURIComponent(text);
 
-    if (navigator.share) {
-      navigator.share({ title: 'Worst Onboarding Ever', text });
-    } else if (navigator.clipboard) {
-      navigator.clipboard.writeText(text).then(() => {
-        const btn = document.getElementById('share-btn');
-        const original = btn.textContent;
-        btn.textContent = 'Copied!';
-        setTimeout(() => btn.textContent = original, 2000);
-      });
-    }
+    window.open(linkedInUrl, '_blank', 'width=600,height=600');
   },
 
   // ── LocalStorage ──────────────────────────────────────
