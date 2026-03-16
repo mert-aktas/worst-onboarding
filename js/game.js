@@ -160,13 +160,98 @@ const Game = {
 
   // ── Sharing ───────────────────────────────────────────
   share() {
-    const label = this.getPatienceLabel(
-      Math.max(0, Math.round(Math.max(0, 100 - (this.timer / 3)) - this.rageClicks * 0.5))
-    );
+    const patienceScore = Math.max(0, Math.round(Math.max(0, 100 - (this.timer / 3)) - this.rageClicks * 0.5));
+    const label = this.getPatienceLabel(patienceScore);
+
+    // Generate and download share image
+    this.generateShareImage(this.formatTime(this.timer), this.rageClicks, patienceScore, label);
+
+    // Open LinkedIn compose with pre-filled text
     const text = `I just survived the Worst Onboarding Ever.\n\n⏱ ${this.formatTime(this.timer)} minutes | 💀 ${this.rageClicks} rage clicks | Patience: "${label}"\n\nCan you beat me?\nhttps://mert-aktas.github.io/worst-onboarding/\n\n#WorstOnboardingEver`;
     const linkedInUrl = 'https://www.linkedin.com/feed/?shareActive=true&text=' + encodeURIComponent(text);
 
-    window.open(linkedInUrl, '_blank', 'width=600,height=600');
+    // Small delay so the download triggers before the popup
+    setTimeout(() => {
+      window.open(linkedInUrl, '_blank', 'width=600,height=600');
+    }, 300);
+  },
+
+  generateShareImage(time, clicks, patience, label) {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1200;
+    canvas.height = 630;
+    const ctx = canvas.getContext('2d');
+
+    // Background
+    ctx.fillStyle = '#0a0a0c';
+    ctx.fillRect(0, 0, 1200, 630);
+
+    // Subtle gradient overlay
+    const grad = ctx.createRadialGradient(600, 200, 0, 600, 200, 500);
+    grad.addColorStop(0, 'rgba(77, 255, 145, 0.06)');
+    grad.addColorStop(1, 'transparent');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, 1200, 630);
+
+    // Title
+    ctx.fillStyle = '#e8e6e3';
+    ctx.font = '700 72px Georgia, serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('You Survived.', 600, 140);
+
+    // Subtitle
+    ctx.fillStyle = '#6b6976';
+    ctx.font = '400 22px system-ui, sans-serif';
+    ctx.fillText('Against all odds, you made it through the worst onboarding ever created.', 600, 190);
+
+    // Stats
+    const stats = [
+      { value: time, label: 'TIME' },
+      { value: String(clicks), label: 'RAGE CLICKS' },
+      { value: patience + '/100', label: 'PATIENCE SCORE' }
+    ];
+
+    const startX = 200;
+    const spacing = 400;
+
+    stats.forEach((stat, i) => {
+      const x = startX + i * spacing;
+
+      ctx.fillStyle = '#e8e6e3';
+      ctx.font = '400 64px Georgia, serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(stat.value, x, 320);
+
+      ctx.fillStyle = '#6b6976';
+      ctx.font = '500 14px system-ui, sans-serif';
+      ctx.letterSpacing = '2px';
+      ctx.fillText(stat.label, x, 355);
+    });
+
+    // Patience label
+    ctx.fillStyle = '#ff4d4d';
+    ctx.font = '500 28px system-ui, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(label, 600, 430);
+
+    // Bottom branding
+    ctx.fillStyle = '#6b6976';
+    ctx.font = '400 18px system-ui, sans-serif';
+    ctx.fillText('Worst Onboarding Ever  ·  mert-aktas.github.io/worst-onboarding', 600, 560);
+
+    // Accent line
+    ctx.strokeStyle = '#ff4d4d';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(0, 627);
+    ctx.lineTo(1200, 627);
+    ctx.stroke();
+
+    // Download
+    const link = document.createElement('a');
+    link.download = 'worst-onboarding-score.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
   },
 
   // ── LocalStorage ──────────────────────────────────────
