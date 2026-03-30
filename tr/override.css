@@ -1,0 +1,3 @@
+.l3-tooltip-cover-next::after {
+  content: '(buton bu tooltip\'in arkasında. klasik.)';
+}

@@ -1,0 +1,3 @@
+.l3-tooltip-cover-next::after {
+  content: '(o botão está atrás deste tooltip. clássico.)';
+}
