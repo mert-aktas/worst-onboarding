@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>O Pior Onboarding de Todos os Tempos</title>
+  <meta name="description" content="Quanto tempo você aguenta o pior onboarding já criado? Um jogo no navegador sobre tudo que pode dar errado no onboarding de usuários.">
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Social sharing -->
+  <meta property="og:title" content="O Pior Onboarding de Todos os Tempos">
+  <meta property="og:description" content="Quanto tempo você aguenta? Um jogo sobre tudo que pode dar errado no onboarding de usuários.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mert-aktas.github.io/worst-onboarding/pt-br/">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../css/game.css">
+  <link rel="stylesheet" href="../css/levels.css">
+</head>
+<body>
+
+  <!-- Title Screen -->
+  <div id="title-screen">
+    <span class="title-badge">Um jogo sobre UX ruim</span>
+    <h1 class="title-heading">O Pior<br>Onboarding<br><em>de Todos os Tempos</em></h1>
+    <p class="title-tagline">Cinco níveis de anti-padrões reais de onboarding. Sua paciência será testada. Seus cliques de raiva serão contados.</p>
+    <button id="start-btn">Iniciar Onboarding</button>
+    <p class="title-best" id="title-best"></p>
+    <div class="title-footer">
+      <a href="https://userguiding.com/pt-br?utm_source=worst-onboarding-game-ptbr&utm_medium=referral" target="_blank" rel="noopener">Feito pela UserGuiding</a>
+    </div>
+  </div>
+
+  <!-- HUD -->
+  <div id="hud" class="hidden">
+    <div class="hud-item">
+      <span class="hud-label">Tempo</span>
+      <span class="hud-value" id="hud-timer">0:00</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">Nível</span>
+      <span class="hud-value" id="hud-level">1 / 5</span>
+    </div>
+    <div class="hud-item">
+      <span class="hud-label">Cliques de Raiva</span>
+      <span class="hud-value" id="hud-clicks">0</span>
+    </div>
+  </div>
+
+  <!-- Transition Screen -->
+  <div id="transition-screen" class="hidden">
+    <span id="transition-level-num">Nível 1</span>
+    <h2 id="transition-level-name">O Modal de Boas-Vindas do Inferno</h2>
+    <p id="transition-level-desc">Só me deixa entrar logo.</p>
+  </div>
+
+  <!-- Level Containers -->
+  <div id="level-1" class="level-container hidden"></div>
+  <div id="level-2" class="level-container hidden"></div>
+  <div id="level-3" class="level-container hidden"></div>
+  <div id="level-4" class="level-container hidden"></div>
+  <div id="level-5" class="level-container hidden"></div>
+
+  <!-- End Screen -->
+  <div id="end-screen" class="hidden">
+    <div id="confetti-container"></div>
+    <h1 class="end-title">Você Sobreviveu.</h1>
+    <p class="end-subtitle">Contra todas as probabilidades, você conseguiu passar pelo pior onboarding já criado.</p>
+
+    <div class="end-stats">
+      <div class="end-stat">
+        <span class="end-stat-value" id="end-time">0:00</span>
+        <span class="end-stat-label">Tempo</span>
+      </div>
+      <div class="end-stat">
+        <span class="end-stat-value" id="end-clicks">0</span>
+        <span class="end-stat-label">Cliques de Raiva</span>
+      </div>
+      <div class="end-stat">
+        <span class="end-stat-value" id="end-patience">0</span>
+        <span class="end-stat-label">Pontuação de Paciência</span>
+      </div>
+    </div>
+
+    <p class="end-patience-label" id="end-patience-label">Mestre Zen</p>
+    <p class="end-best" id="end-best"></p>
+
+    <div class="end-actions">
+      <button id="share-btn">Compartilhe sua Vitória no LinkedIn</button>
+      <button id="play-again-btn">Jogar Novamente</button>
+    </div>
+
+    <p class="end-cta">Acha que o onboarding do seu produto é assim? Talvez seja. <a href="https://userguiding.com/pt-br?utm_source=worst-onboarding-game-ptbr&utm_medium=referral" target="_blank" rel="noopener">Corrija isso →</a></p>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/game.js"></script>
+  <script src="js/levels.js"></script>
+
+</body>
+</html>
