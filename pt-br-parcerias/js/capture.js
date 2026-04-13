@@ -45,8 +45,7 @@ const Capture = {
 
     try {
       await this.submitToHubspot(email);
-      // Success state wiring is added in Task 9.
-      console.log('Submitted successfully (success UI added in Task 9).');
+      this.showSuccessAndRedirect(email);
     } catch (err) {
       console.error('HubSpot submit failed:', err);
       errorEl.hidden = false;
@@ -78,6 +77,42 @@ const Capture = {
       throw new Error(`HubSpot ${res.status}: ${text}`);
     }
     return res.json();
+  },
+
+  // ── Success state + redirect ───────────────────────────
+  showSuccessAndRedirect(email) {
+    const formWrap = document.getElementById('capture-form-wrap');
+    const successWrap = document.getElementById('capture-success-wrap');
+    const countdownEl = document.getElementById('capture-countdown');
+    const fallbackLink = document.getElementById('capture-fallback-link');
+
+    const ctx = this.getContext();
+    const params = new URLSearchParams();
+    params.set('email', email);
+    if (ctx.utm_source)   params.set('utm_source', ctx.utm_source);
+    if (ctx.utm_medium)   params.set('utm_medium', ctx.utm_medium);
+    if (ctx.utm_campaign) params.set('utm_campaign', ctx.utm_campaign);
+    if (ctx.utm_content)  params.set('utm_content', ctx.utm_content);
+    if (ctx.utm_term)     params.set('utm_term', ctx.utm_term);
+    const calendarUrl = `${this.CALENDAR_URL}?${params.toString()}`;
+    fallbackLink.href = calendarUrl;
+
+    formWrap.hidden = true;
+    successWrap.hidden = false;
+
+    let remaining = this.REDIRECT_DELAY_SECONDS;
+    countdownEl.textContent = remaining;
+
+    const tick = () => {
+      remaining -= 1;
+      if (remaining <= 0) {
+        window.location.href = calendarUrl;
+        return;
+      }
+      countdownEl.textContent = remaining;
+      setTimeout(tick, 1000);
+    };
+    setTimeout(tick, 1000);
   },
 
   // ── UTM Capture ────────────────────────────────────────
