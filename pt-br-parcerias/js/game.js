@@ -18,7 +18,6 @@ const Game = {
   init() {
     document.getElementById('start-btn').addEventListener('click', () => this.start());
     document.getElementById('play-again-btn').addEventListener('click', () => this.restart());
-    document.getElementById('share-btn').addEventListener('click', () => this.share());
 
     // Global rage click tracker
     document.addEventListener('click', (e) => {
@@ -156,114 +155,6 @@ const Game = {
     if (score >= 40) return 'Levemente Frustrado';
     if (score >= 20) return 'Entusiasta do Clique de Raiva';
     return 'Teclado Destruído';
-  },
-
-  // ── Sharing ───────────────────────────────────────────
-  share() {
-    const patienceScore = Math.max(0, Math.round(Math.max(0, 100 - (this.timer / 3)) - this.rageClicks * 0.5));
-    const label = this.getPatienceLabel(patienceScore);
-    const time = this.formatTime(this.timer);
-    const clicks = this.rageClicks;
-
-    const text = `Acabei de sobreviver ao Pior Onboarding de Todos os Tempos.\n\n⏱ ${time} minutos | 💀 ${clicks} cliques de raiva | Paciência: "${label}"\n\nConsegue me superar? Tente aqui: https://mert-aktas.github.io/worst-onboarding/pt-br/\n\n#WorstOnboardingEver`;
-    const linkedInUrl = 'https://www.linkedin.com/feed/?shareActive=true&text=' + encodeURIComponent(text);
-
-    // Copy share image to clipboard, then countdown, then open LinkedIn
-    this.generateShareImage(time, clicks, patienceScore, label).then(() => {
-      const btn = document.getElementById('share-btn');
-      let countdown = 3;
-      const tick = () => {
-        const s = countdown === 1 ? 'segundo' : 'segundos';
-        btn.textContent = `Imagem copiada! Cole no LinkedIn — Redirecionando em ${countdown} ${s}`;
-        if (countdown === 0) {
-          btn.textContent = 'Compartilhe sua Vitória no LinkedIn';
-          window.open(linkedInUrl, '_blank', 'width=600,height=600');
-          return;
-        }
-        countdown--;
-        setTimeout(tick, 1000);
-      };
-      tick();
-    });
-  },
-
-  generateShareImage(time, clicks, patience, label) {
-    const canvas = document.createElement('canvas');
-    canvas.width = 1200;
-    canvas.height = 630;
-    const ctx = canvas.getContext('2d');
-
-    // Background
-    ctx.fillStyle = '#0a0a0c';
-    ctx.fillRect(0, 0, 1200, 630);
-
-    // Subtle gradient overlay
-    const grad = ctx.createRadialGradient(600, 200, 0, 600, 200, 500);
-    grad.addColorStop(0, 'rgba(77, 255, 145, 0.06)');
-    grad.addColorStop(1, 'transparent');
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, 1200, 630);
-
-    // Title
-    ctx.fillStyle = '#e8e6e3';
-    ctx.font = '700 72px Georgia, serif';
-    ctx.textAlign = 'center';
-    ctx.fillText('Você Sobreviveu.', 600, 160);
-
-    // Subtitle
-    ctx.fillStyle = '#6b6976';
-    ctx.font = '400 22px system-ui, sans-serif';
-    ctx.fillText('Contra todas as probabilidades, você passou pelo pior onboarding já criado.', 600, 210);
-
-    // Stats
-    const stats = [
-      { value: time, label: 'TEMPO' },
-      { value: String(clicks), label: 'CLIQUES DE RAIVA' },
-      { value: patience + '/100', label: 'PONTUAÇÃO DE PACIÊNCIA' }
-    ];
-
-    const startX = 200;
-    const spacing = 400;
-
-    stats.forEach((stat, i) => {
-      const x = startX + i * spacing;
-
-      ctx.fillStyle = '#e8e6e3';
-      ctx.font = '400 64px Georgia, serif';
-      ctx.textAlign = 'center';
-      ctx.fillText(stat.value, x, 350);
-
-      ctx.fillStyle = '#6b6976';
-      ctx.font = '500 14px system-ui, sans-serif';
-      ctx.fillText(stat.label, x, 385);
-    });
-
-    // Patience label
-    ctx.fillStyle = '#ff4d4d';
-    ctx.font = '500 28px system-ui, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillText(label, 600, 460);
-
-    // Accent line at bottom
-    ctx.strokeStyle = '#ff4d4d';
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(0, 627);
-    ctx.lineTo(1200, 627);
-    ctx.stroke();
-
-    // Copy to clipboard
-    return new Promise((resolve) => {
-      canvas.toBlob((blob) => {
-        if (navigator.clipboard && window.ClipboardItem) {
-          navigator.clipboard.write([
-            new ClipboardItem({ 'image/png': blob })
-          ]).then(() => resolve()).catch(() => resolve());
-        } else {
-          resolve();
-        }
-      }, 'image/png');
-    });
   },
 
   // ── LocalStorage ──────────────────────────────────────
