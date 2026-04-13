@@ -4,29 +4,45 @@
 
 /* Capture form (Bárbara variant) */
 #capture-section {
-  margin: 32px auto 24px;
+  position: relative;
+  margin: 56px auto 32px;
   max-width: 520px;
-  padding: 28px 32px;
+  padding: 32px 36px 28px;
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
   text-align: center;
+  overflow: hidden;
+}
+
+/* Thin red accent strip at top, ties the form to the "Mestre Zen" / rage-click red */
+#capture-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 0%, #ff4d4d 50%, transparent 100%);
 }
 
 #capture-section .capture-heading {
   font-family: Georgia, serif;
   font-weight: 700;
-  font-size: 26px;
+  font-size: 28px;
+  letter-spacing: -0.3px;
+  line-height: 1.2;
   color: #e8e6e3;
-  margin: 0 0 12px;
+  margin: 0 0 14px;
 }
 
 #capture-section .capture-subtext {
-  font-family: system-ui, sans-serif;
+  font-family: system-ui, -apple-system, sans-serif;
   font-size: 15px;
   color: #a9a7b3;
-  line-height: 1.5;
-  margin: 0 0 20px;
+  line-height: 1.55;
+  max-width: 420px;
+  margin: 0 auto 24px;
 }
 
 #capture-form {
@@ -37,69 +53,109 @@
 }
 
 #capture-email {
-  padding: 14px 16px;
+  padding: 16px 18px;
   font-size: 16px;
-  font-family: system-ui, sans-serif;
+  font-family: system-ui, -apple-system, sans-serif;
   background: #14141a;
   color: #e8e6e3;
   border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
+  border-radius: 10px;
   outline: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+#capture-email::placeholder {
+  color: #5b5966;
 }
 
 #capture-email:focus {
   border-color: #ff4d4d;
+  box-shadow: 0 0 0 3px rgba(255, 77, 77, 0.18);
 }
 
 #capture-submit {
-  padding: 14px 24px;
+  padding: 15px 24px;
   font-size: 16px;
-  font-weight: 600;
-  font-family: system-ui, sans-serif;
+  font-weight: 700;
+  font-family: system-ui, -apple-system, sans-serif;
+  letter-spacing: 0.2px;
   background: #ff4d4d;
   color: #fff;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
-  transition: background 150ms ease;
+  transition: background 150ms ease, transform 100ms ease;
 }
 
 #capture-submit:hover:not(:disabled) {
-  background: #ff6666;
+  background: #ff5e5e;
+}
+
+#capture-submit:active:not(:disabled) {
+  transform: translateY(1px);
 }
 
 #capture-submit:disabled {
-  opacity: 0.6;
+  opacity: 0.55;
   cursor: not-allowed;
 }
 
 .capture-error {
-  font-family: system-ui, sans-serif;
+  font-family: system-ui, -apple-system, sans-serif;
   font-size: 14px;
   color: #ff8a8a;
-  margin: 4px 0 0;
+  margin: 6px 0 0;
 }
 
 .capture-consent {
-  font-family: system-ui, sans-serif;
+  font-family: system-ui, -apple-system, sans-serif;
   font-size: 12px;
   color: #6b6976;
-  line-height: 1.5;
-  margin: 8px 0 0;
+  line-height: 1.6;
+  max-width: 380px;
+  margin: 14px auto 0;
 }
 
 .capture-consent a {
   color: #a9a7b3;
   text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.capture-consent a:hover {
+  color: #e8e6e3;
+}
+
+#capture-success-wrap .capture-subtext {
+  font-size: 16px;
+}
+
+#capture-countdown {
+  display: inline-block;
+  min-width: 1.2em;
+  font-weight: 700;
+  color: #ff4d4d;
 }
 
 .capture-fallback {
-  font-family: system-ui, sans-serif;
+  font-family: system-ui, -apple-system, sans-serif;
   font-size: 13px;
   color: #6b6976;
-  margin: 12px 0 0;
+  margin: 14px 0 0;
 }
 
 .capture-fallback a {
   color: #a9a7b3;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Tighten the rhythm between patience label area and the form */
+#end-screen .end-best {
+  margin-bottom: 0;
+}
+
+/* Push Play Again further down so it doesn't compete with the form CTA */
+#end-screen .end-actions {
+  margin-top: 24px;
 }
