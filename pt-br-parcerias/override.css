@@ -1,3 +1,105 @@
 .l3-tooltip-cover-next::after {
   content: '(o botão está atrás deste tooltip. clássico.)';
 }
+
+/* Capture form (Bárbara variant) */
+#capture-section {
+  margin: 32px auto 24px;
+  max-width: 520px;
+  padding: 28px 32px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  text-align: center;
+}
+
+#capture-section .capture-heading {
+  font-family: Georgia, serif;
+  font-weight: 700;
+  font-size: 26px;
+  color: #e8e6e3;
+  margin: 0 0 12px;
+}
+
+#capture-section .capture-subtext {
+  font-family: system-ui, sans-serif;
+  font-size: 15px;
+  color: #a9a7b3;
+  line-height: 1.5;
+  margin: 0 0 20px;
+}
+
+#capture-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: stretch;
+}
+
+#capture-email {
+  padding: 14px 16px;
+  font-size: 16px;
+  font-family: system-ui, sans-serif;
+  background: #14141a;
+  color: #e8e6e3;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  outline: none;
+}
+
+#capture-email:focus {
+  border-color: #ff4d4d;
+}
+
+#capture-submit {
+  padding: 14px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: system-ui, sans-serif;
+  background: #ff4d4d;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+
+#capture-submit:hover:not(:disabled) {
+  background: #ff6666;
+}
+
+#capture-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.capture-error {
+  font-family: system-ui, sans-serif;
+  font-size: 14px;
+  color: #ff8a8a;
+  margin: 4px 0 0;
+}
+
+.capture-consent {
+  font-family: system-ui, sans-serif;
+  font-size: 12px;
+  color: #6b6976;
+  line-height: 1.5;
+  margin: 8px 0 0;
+}
+
+.capture-consent a {
+  color: #a9a7b3;
+  text-decoration: underline;
+}
+
+.capture-fallback {
+  font-family: system-ui, sans-serif;
+  font-size: 13px;
+  color: #6b6976;
+  margin: 12px 0 0;
+}
+
+.capture-fallback a {
+  color: #a9a7b3;
+}
