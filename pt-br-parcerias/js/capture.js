@@ -16,7 +16,68 @@ const Capture = {
   // ── Init ───────────────────────────────────────────────
   init() {
     this.captureContext();
-    // Form submit wiring is added in Task 8.
+    this.bindForm();
+  },
+
+  bindForm() {
+    const form = document.getElementById('capture-form');
+    if (!form) return;
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      this.handleSubmit();
+    });
+  },
+
+  async handleSubmit() {
+    const emailInput = document.getElementById('capture-email');
+    const submitBtn = document.getElementById('capture-submit');
+    const errorEl = document.getElementById('capture-error');
+    const email = emailInput.value.trim();
+
+    if (!email || !emailInput.checkValidity()) {
+      emailInput.reportValidity();
+      return;
+    }
+
+    errorEl.hidden = true;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando…';
+
+    try {
+      await this.submitToHubspot(email);
+      // Success state wiring is added in Task 9.
+      console.log('Submitted successfully (success UI added in Task 9).');
+    } catch (err) {
+      console.error('HubSpot submit failed:', err);
+      errorEl.hidden = false;
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Falar com a Bárbara';
+    }
+  },
+
+  async submitToHubspot(email) {
+    const payload = {
+      fields: [
+        { objectTypeId: '0-1', name: 'email', value: email }
+      ],
+      context: {
+        pageUri: window.location.href,
+        pageName: 'Worst Onboarding Ever PT-BR Parcerias'
+      }
+    };
+
+    const url = `https://api.hsforms.com/submissions/v3/integration/submit/${this.PORTAL_ID}/${this.FORM_GUID}`;
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(`HubSpot ${res.status}: ${text}`);
+    }
+    return res.json();
   },
 
   // ── UTM Capture ────────────────────────────────────────
