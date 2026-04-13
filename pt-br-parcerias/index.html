@@ -86,6 +86,27 @@
     <p class="end-patience-label" id="end-patience-label">Mestre Zen</p>
     <p class="end-best" id="end-best"></p>
 
+    <div id="capture-section">
+      <div id="capture-form-wrap">
+        <h2 class="capture-heading">Que tal um onboarding que não dá raiva?</h2>
+        <p class="capture-subtext">Deixe seu email. A Bárbara, da nossa equipe no Brasil, abre um papo com você sobre o onboarding do seu produto.</p>
+        <form id="capture-form" novalidate>
+          <input type="email" id="capture-email" name="email" placeholder="seu@email.com" required autocomplete="email">
+          <button type="submit" id="capture-submit">Falar com a Bárbara</button>
+          <p class="capture-error" id="capture-error" hidden>Ops, algo deu errado. Tenta de novo em alguns segundos?</p>
+          <p class="capture-consent">
+            Ao enviar, você concorda em receber contato comercial da UserGuiding.
+            Veja nossa <a href="https://userguiding.com/pt-br/politica-de-privacidade" target="_blank" rel="noopener">Política de Privacidade</a>.
+          </p>
+        </form>
+      </div>
+      <div id="capture-success-wrap" hidden>
+        <h2 class="capture-heading">Valeu!</h2>
+        <p class="capture-subtext">Vamos abrir a agenda da Bárbara em <span id="capture-countdown">3</span> segundos…</p>
+        <p class="capture-fallback">Se nada acontecer, <a href="#" id="capture-fallback-link">clique aqui</a>.</p>
+      </div>
+    </div>
+
     <div class="end-actions">
       <button id="play-again-btn">Jogar Novamente</button>
     </div>
