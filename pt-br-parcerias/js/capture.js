@@ -5,9 +5,8 @@
 
 const Capture = {
   // ── Config ─────────────────────────────────────────────
-  PORTAL_ID: '<PORTAL_ID>',
-  FORM_GUID: '<FORM_GUID>',
-  SUBSCRIPTION_TYPE_ID: '<SUBSCRIPTION_TYPE_ID>',
+  PORTAL_ID: '8289649',
+  FORM_GUID: '23ff4b6d-a7c9-4742-818b-01b509670b27',
   CALENDAR_URL: 'https://start.userguiding.com/meetings/bmilet',
   REDIRECT_DELAY_SECONDS: 3,
 
