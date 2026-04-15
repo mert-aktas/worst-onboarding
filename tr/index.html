@@ -87,17 +87,36 @@
     <p class="end-patience-label" id="end-patience-label">Zen Ustası</p>
     <p class="end-best" id="end-best"></p>
 
-    <div class="end-actions">
-      <button id="share-btn">Zaferini LinkedIn'de Paylaş</button>
-      <button id="play-again-btn">Tekrar Oyna</button>
+    <div id="capture-section">
+      <div id="capture-form-wrap">
+        <h2 class="capture-heading">Sinir bozmayan bir onboarding'e ne dersin?</h2>
+        <p class="capture-subtext">Emailini bırak. Ekibimizden Levent seninle ürününün onboarding'i hakkında konuşsun.</p>
+        <form id="capture-form" novalidate>
+          <input type="email" id="capture-email" name="email" placeholder="email@adresin.com" required autocomplete="email">
+          <button type="submit" id="capture-submit">Levent'le Tanış</button>
+          <p class="capture-error" id="capture-error" hidden>Bir şeyler ters gitti. Birkaç saniye sonra tekrar dener misin?</p>
+          <p class="capture-consent">
+            Göndererek UserGuiding'den ticari iletişim almayı kabul ediyorsun.
+            <a href="https://userguiding.com/privacy-policy" target="_blank" rel="noopener">Gizlilik Politikamızı</a> incele.
+          </p>
+        </form>
+      </div>
+      <div id="capture-success-wrap" hidden>
+        <h2 class="capture-heading">Harika!</h2>
+        <p class="capture-subtext">Levent'in takvimini <span id="capture-countdown">3</span> saniye içinde açıyoruz…</p>
+        <p class="capture-fallback">Bir şey olmazsa, <a href="#" id="capture-fallback-link">buraya tıkla</a>.</p>
+      </div>
     </div>
 
-    <p class="end-cta">Senin onboarding'in de bu kadar kötü mü? Olabilir. <a href="https://userguiding.com?utm_source=worst-onboarding-game-tr&utm_medium=referral" target="_blank" rel="noopener">Düzelt →</a></p>
+    <div class="end-actions">
+      <button id="play-again-btn">Tekrar Oyna</button>
+    </div>
   </div>
 
   <!-- Scripts -->
   <script src="js/game.js"></script>
   <script src="js/levels.js"></script>
+  <script src="js/capture.js"></script>
 
 </body>
 </html>
