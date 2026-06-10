@@ -321,11 +321,19 @@ const Levels = {
 
       const rect = target.getBoundingClientRect();
 
-      // Position tooltip to COVER the target element
-      if (data.position === 'right') {
+      // Position tooltip to COVER the target element.
+      // On small screens the computed coords overflow the viewport, so the
+      // tooltip docks to the bottom edge instead (.l3-tooltip-mobile).
+      if (window.matchMedia('(max-width: 640px)').matches) {
+        tooltip.classList.add('l3-tooltip-mobile');
+        tooltip.style.left = '';
+        tooltip.style.top = '';
+      } else if (data.position === 'right') {
+        tooltip.classList.remove('l3-tooltip-mobile');
         tooltip.style.left = (rect.right + 12) + 'px';
         tooltip.style.top = rect.top + 'px';
       } else {
+        tooltip.classList.remove('l3-tooltip-mobile');
         tooltip.style.left = rect.left + 'px';
         tooltip.style.top = (rect.bottom + 12) + 'px';
       }
@@ -613,8 +621,9 @@ const Levels = {
     // Dismiss tooltip
     document.getElementById('l5-dismiss-tooltip').addEventListener('click', () => {
       const tip = document.getElementById('l5-tooltip');
+      const maxShift = window.innerWidth < 640 ? 30 : 60;
       tip.style.top = (Math.random() * 60 + 10) + '%';
-      tip.style.left = (Math.random() * 60 + 10) + '%';
+      tip.style.left = (Math.random() * maxShift + 5) + '%';
       tip.querySelector('p').textContent = [
         'You dismissed a tooltip! Here\'s another one.',
         'Tooltips are like cats. They come back.',

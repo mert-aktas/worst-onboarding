@@ -907,3 +907,54 @@
   color: #333;
   border-color: #999;
 }
+
+/* ═══ Mobile (≤640px) ═══════════════════════════════ */
+@media (max-width: 640px) {
+  /* L1 */
+  .l1-content-behind { padding: 3rem 1.25rem; }
+  .l1-modal { padding: 1.5rem; width: 92%; }
+  .l1-modal-footer { flex-wrap: wrap; }
+  .l1-cookie-banner { flex-direction: column; gap: 0.75rem; align-items: flex-start; padding: 1rem 1.25rem; }
+  .l1-cookie-buttons { flex-wrap: wrap; }
+
+  /* L2 */
+  .l2-page { padding: 1rem; align-items: flex-start; }
+  .l2-form-wrapper { padding: 1.5rem 1.25rem; }
+
+  /* L3: dashboard stacks, sidebar becomes a top strip */
+  .l3-dashboard { flex-direction: column; }
+  .l3-sidebar { width: 100%; padding: 0.75rem 0; }
+  .l3-logo { padding: 0 1rem 0.5rem; }
+  .l3-nav { display: flex; flex-wrap: wrap; }
+  .l3-nav-item { padding: 0.5rem 0.75rem; font-size: 0.8rem; }
+  .l3-main { padding: 1rem; }
+  .l3-content { grid-template-columns: 1fr; }
+  .l3-tour-done { padding: 1.5rem 1rem; }
+
+  /* L4: sidebar becomes a top strip, footer spans full width */
+  .l4-sidebar { position: static; width: 100%; border-right: none; border-bottom: 1px solid #e5e7eb; padding: 0.75rem 0; }
+  .l4-logo { padding: 0 1rem 0.5rem; }
+  .l4-nav { display: flex; flex-wrap: wrap; }
+  .l4-nav-item { padding: 0.5rem 0.75rem; font-size: 0.8rem; }
+  .l4-main { margin-left: 0; min-height: 0; padding: 2rem 1rem 6rem; }
+  .l4-footer { left: 0; flex-wrap: wrap; row-gap: 0.2rem; }
+  .l4-hidden-link { color: #e3e4e8; } /* a shade darker: findable without hover on touch screens */
+  .l4-feedback { white-space: normal; max-width: calc(100vw - 2rem); text-align: center; bottom: 96px; }
+
+  /* L5 */
+  .l5-bg-dashboard { padding: 1.25rem 1rem; }
+  .l5-header { flex-wrap: wrap; gap: 0.75rem; }
+  .l5-cookie-banner { flex-direction: column; gap: 0.6rem; align-items: flex-start; padding: 0.9rem 1rem; }
+  .l5-tooltip { max-width: min(260px, calc(100vw - 24px)); }
+  .l5-modal { padding: 1.5rem 1.25rem; }
+}
+
+/* L3 mobile tooltip dock (class applied by JS only on small screens) */
+.l3-tooltip-mobile {
+  left: 12px;
+  right: 12px;
+  top: auto;
+  bottom: 12px;
+  max-width: none;
+}
+.l3-tooltip-mobile::before { display: none; }
