@@ -12,6 +12,11 @@
 const LB = (() => {
   const API = 'https://woe-leaderboard.ynot-partners.workers.dev';
 
+  // Dormant in prod (end screen got crowded — Mert, 2026-06-11). Enable for
+  // testing/events with ?leaderboard=1 or localStorage.setItem('woe-lb','1').
+  const ENABLED = new URLSearchParams(location.search).has('leaderboard')
+    || localStorage.getItem('woe-lb') === '1';
+
   const LANG = (typeof WOE_VARIANT !== 'undefined' && WOE_VARIANT.startsWith('tr')) ? 'tr'
     : (typeof WOE_VARIANT !== 'undefined' && WOE_VARIANT.startsWith('pt-br')) ? 'pt'
     : 'en';
@@ -52,6 +57,7 @@ const LB = (() => {
     runMode = localStorage.getItem('woe-best') ? 'speedrun' : 'blind';
     runToken = null;
     submitted = false;
+    if (!ENABLED) return; // no token -> onGameEnd renders nothing
     try {
       runToken = await api('/api/run', { method: 'POST' });
     } catch (e) { /* offline / blocked: leaderboard quietly unavailable */ }
