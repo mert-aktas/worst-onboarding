@@ -213,13 +213,18 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  /* flex-start + scroll, not center: tall content (capture form, meeting
+     embed) in a centered fixed flexbox clips the top unreachably */
+  justify-content: flex-start;
+  overflow-y: auto;
   text-align: center;
   padding: 2rem;
   background:
     radial-gradient(ellipse at 50% 30%, rgba(77, 255, 145, 0.06) 0%, transparent 50%),
     var(--game-bg);
 }
+
+#end-screen > * { flex-shrink: 0; }
 
 .end-title {
   font-family: var(--font-display);
@@ -400,4 +405,34 @@ body {
 @media (max-width: 380px) {
   .hud-label { display: none; }
   .end-stat-value { font-size: 1.5rem; }
+}
+
+/* ── Meeting embed (end screen) ─────────────────────── */
+#meeting-section {
+  margin-top: 3rem;
+  width: 100%;
+  max-width: 720px;
+}
+
+.meeting-heading {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  margin-bottom: 0.4rem;
+}
+
+.meeting-subtext {
+  font-size: 0.9rem;
+  color: var(--game-text-dim);
+  margin-bottom: 1.25rem;
+}
+
+.meetings-iframe-container {
+  min-height: 620px;
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  #meeting-section { margin-top: 2rem; }
+  .meeting-heading { font-size: 1.25rem; }
 }

@@ -136,6 +136,14 @@ const Game = {
     this.stopTimer();
     this.state = 'end';
 
+    // Load the HubSpot meetings embed once the end screen is actually reached
+    if (!this._meetingsEmbedLoaded) {
+      this._meetingsEmbedLoaded = true;
+      const s = document.createElement('script');
+      s.src = 'https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js';
+      document.body.appendChild(s);
+    }
+
     document.getElementById('hud').classList.add('hidden');
     document.querySelectorAll('.level-container').forEach(el => el.classList.add('hidden'));
 
