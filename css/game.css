@@ -384,7 +384,10 @@ body {
   #start-btn { padding: 0.9rem 2rem; width: 100%; max-width: 320px; }
   .title-footer { bottom: 1rem; }
 
-  #end-screen { padding: 1.5rem; }
+  /* Tall end screens (e.g. variants with a capture form) must scroll on
+     small screens; centering + overflow clips the top unreachably. */
+  #end-screen { padding: 1.5rem; overflow-y: auto; justify-content: flex-start; }
+  #end-screen > * { flex-shrink: 0; }
   .end-subtitle { margin-bottom: 2rem; }
   .end-stats { gap: 1.25rem; flex-wrap: wrap; justify-content: center; margin-bottom: 1.5rem; }
   .end-stat-value { font-size: 1.8rem; }

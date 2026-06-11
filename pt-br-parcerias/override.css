@@ -159,3 +159,10 @@
 #end-screen .end-actions {
   margin-top: 24px;
 }
+
+/* Mobile: compact capture card (end screen scrolls on small screens) */
+@media (max-width: 640px) {
+  #capture-section { margin: 24px auto 16px; padding: 22px 18px 20px; }
+  #capture-section .capture-heading { font-size: 21px; }
+  #capture-section .capture-subtext { font-size: 14px; margin: 0 auto 16px; }
+}

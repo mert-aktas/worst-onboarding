@@ -41,6 +41,8 @@ const Game = {
     this.timer = 0;
     this.rageClicks = 0;
 
+    track('game_start');
+
     document.getElementById('title-screen').classList.add('hidden');
     document.getElementById('hud').classList.remove('hidden');
 
@@ -116,6 +118,11 @@ const Game = {
   // ── Level Complete ────────────────────────────────────
   completeLevel() {
     const levelTime = this.timer - this.levelStartTime;
+    track('level_complete', {
+      level: this.currentLevel,
+      level_seconds: levelTime,
+      level_rage_clicks: this.levelRageClicks
+    });
 
     if (this.currentLevel < this.totalLevels) {
       this.showTransition(this.currentLevel + 1);
@@ -136,6 +143,11 @@ const Game = {
     const timeScore = Math.max(0, 100 - (this.timer / 3));
     const clickPenalty = this.rageClicks * 0.5;
     const patienceScore = Math.max(0, Math.round(timeScore - clickPenalty));
+    track('game_complete', {
+      total_seconds: this.timer,
+      rage_clicks: this.rageClicks,
+      patience_score: patienceScore
+    });
 
     document.getElementById('end-time').textContent = this.formatTime(this.timer);
     document.getElementById('end-clicks').textContent = this.rageClicks;
@@ -160,6 +172,7 @@ const Game = {
 
   // ── Sharing ───────────────────────────────────────────
   share() {
+    track('share_click');
     const patienceScore = Math.max(0, Math.round(Math.max(0, 100 - (this.timer / 3)) - this.rageClicks * 0.5));
     const label = this.getPatienceLabel(patienceScore);
     const time = this.formatTime(this.timer);
@@ -287,6 +300,7 @@ const Game = {
 
   // ── Restart ───────────────────────────────────────────
   restart() {
+    track('play_again');
     document.getElementById('end-screen').classList.add('hidden');
     document.querySelectorAll('.level-container').forEach(el => {
       el.classList.add('hidden');
