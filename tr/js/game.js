@@ -41,6 +41,7 @@ const Game = {
     this.rageClicks = 0;
 
     track('game_start');
+    if (window.LB) LB.startRun();
 
     document.getElementById('title-screen').classList.add('hidden');
     document.getElementById('hud').classList.remove('hidden');
@@ -148,6 +149,7 @@ const Game = {
       rage_clicks: this.rageClicks,
       patience_score: patienceScore
     });
+    if (window.LB) LB.onGameEnd({ seconds: this.timer, rage: this.rageClicks, patience: patienceScore });
 
     document.getElementById('end-time').textContent = this.formatTime(this.timer);
     document.getElementById('end-clicks').textContent = this.rageClicks;

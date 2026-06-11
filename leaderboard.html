@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Worst Onboarding Ever — Leaderboard</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,500;9..40,700&display=swap');
+    :root { --bg:#0a0a0c; --surface:#141418; --border:#2a2a32; --text:#e8e6e3; --dim:#6b6976; --accent:#ff4d4d; --success:#4dff91; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family:'DM Sans',sans-serif; background:
+        radial-gradient(ellipse at 50% 0%, rgba(255,77,77,0.07) 0%, transparent 55%), var(--bg);
+      color:var(--text); min-height:100vh; padding:3vh 3vw; text-align:center;
+    }
+    h1 { font-family:'Instrument Serif',serif; font-weight:400; font-size:clamp(2rem,4.5vw,3.6rem); }
+    h1 em { color:var(--accent); font-style:italic; }
+    .sub { color:var(--dim); font-size:clamp(0.9rem,1.6vw,1.3rem); margin:0.5rem 0 4vh; }
+    .boards { display:flex; gap:3vw; justify-content:center; flex-wrap:wrap; }
+    .board { flex:1 1 360px; max-width:640px; }
+    .board h2 {
+      font-family:'Instrument Serif',serif; font-weight:400;
+      font-size:clamp(1.4rem,2.6vw,2.2rem); margin-bottom:1.5vh;
+    }
+    .board h2 small { display:block; font-family:'DM Sans',sans-serif; font-size:clamp(0.7rem,1vw,0.85rem); color:var(--dim); margin-top:0.3rem; }
+    table { width:100%; border-collapse:collapse; font-variant-numeric:tabular-nums; font-size:clamp(1rem,1.9vw,1.6rem); }
+    th { font-size:clamp(0.6rem,1vw,0.8rem); text-transform:uppercase; letter-spacing:0.12em; color:var(--dim); font-weight:500; padding:0.5vh 0.6vw; text-align:left; }
+    td { padding:1.1vh 0.6vw; border-top:1px solid var(--border); text-align:left; }
+    tr:nth-child(1) td { color:#ffd700; }
+    tr:nth-child(2) td { color:#c0c0c0; }
+    tr:nth-child(3) td { color:#cd7f32; }
+    .name { font-weight:700; letter-spacing:0.12em; }
+    .variant { font-weight:400; letter-spacing:0; font-size:clamp(0.6rem,0.9vw,0.8rem); color:var(--dim); border:1px solid var(--border); border-radius:100px; padding:0.1em 0.6em; margin-left:0.6em; vertical-align:middle; }
+    .empty { color:var(--dim); padding:3vh 0; }
+    footer { margin-top:4vh; color:var(--dim); font-size:clamp(0.8rem,1.3vw,1.1rem); }
+    footer strong { color:var(--text); }
+  </style>
+</head>
+<body>
+  <h1>Worst Onboarding <em>Ever</em></h1>
+  <p class="sub">Live leaderboard · refreshes automatically</p>
+  <div class="boards">
+    <div class="board">
+      <h2>First Victims<small>first run · patience score (time + rage clicks)</small></h2>
+      <div id="board-blind"><p class="empty">Loading…</p></div>
+    </div>
+    <div class="board">
+      <h2>Speedrunners<small>replays · pure time. Knowing the tricks IS the game.</small></h2>
+      <div id="board-speedrun"><p class="empty">Loading…</p></div>
+    </div>
+  </div>
+  <footer>Play now: <strong>games.userguiding.com/woe</strong> — beat a time, claim your initials.</footer>
+  <script>
+    const API = 'https://woe-leaderboard.ynot-partners.workers.dev';
+    const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+
+    function render(el, entries) {
+      if (!entries.length) { el.innerHTML = '<p class="empty">No survivors yet. Be the first victim.</p>'; return; }
+      el.innerHTML = '<table><thead><tr><th>#</th><th></th><th>Time</th><th>Rage</th><th>Patience</th></tr></thead><tbody>'
+        + entries.map((e, i) => `<tr>
+            <td>${i + 1}</td>
+            <td class="name">${e.initials}<span class="variant">${e.variant}</span></td>
+            <td>${fmt(e.total_seconds)}</td>
+            <td>${e.rage_clicks}</td>
+            <td>${e.patience_score}</td>
+          </tr>`).join('') + '</tbody></table>';
+    }
+
+    async function refresh() {
+      for (const mode of ['blind', 'speedrun']) {
+        try {
+          const r = await fetch(`${API}/api/top?mode=${mode}&limit=10`);
+          const data = await r.json();
+          render(document.getElementById('board-' + mode), data.entries);
+        } catch (e) { /* keep last good render */ }
+      }
+    }
+    refresh();
+    setInterval(refresh, 20000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+# WOE Leaderboard Worker — deploys to the dedicated UG games Cloudflare account.
+# Account is supplied via CLOUDFLARE_ACCOUNT_ID env var at deploy time (not committed).
+name = "woe-leaderboard"
+main = "src/index.js"
+compatibility_date = "2026-06-01"
+workers_dev = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "woe-leaderboard"
+database_id = "4f2ecb86-038f-4b29-8594-9667d95f1561"
