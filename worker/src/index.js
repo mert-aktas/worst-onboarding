@@ -14,7 +14,7 @@ const VARIANTS = ['en', 'tr', 'pt-br', 'pt-br-parcerias', 'pt-br-yasmin', 'party
 const MODES = ['blind', 'speedrun'];
 
 const MIN_GAME_SECONDS = 10;   // a perfect scripted run clocks ~14s of game time
-const MIN_WALL_SECONDS = 20;   // wall clock between run token and submit
+const MIN_WALL_SECONDS = 15;   // wall clock between token and submit; forced transitions alone are ~10s, elite human replays land near 20s
 const TOKEN_MAX_AGE = 3600;    // run tokens expire after an hour
 const MAX_DAILY_PER_IP = 60;   // generous so a bar night on one venue IP fits
 
