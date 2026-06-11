@@ -207,16 +207,18 @@ body {
 
 /* ── End Screen ────────────────────────────────────── */
 #end-screen {
-  position: fixed;
-  inset: 0;
+  /* Normal flow with the BODY as scroller (same architecture as the site's
+     /schedule-a-new-demo page): a fixed overflow div cannot be touch-scrolled
+     on iOS when the finger lands on the HubSpot iframe, which made the
+     calendar's Confirm button unreachable on phones. */
+  position: relative;
   z-index: 9999;
+  width: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* flex-start + scroll, not center: tall content (capture form, meeting
-     embed) in a centered fixed flexbox clips the top unreachably */
   justify-content: flex-start;
-  overflow-y: auto;
   text-align: center;
   padding: 2rem;
   background:
@@ -389,10 +391,7 @@ body {
   #start-btn { padding: 0.9rem 2rem; width: 100%; max-width: 320px; }
   .title-footer { bottom: 1rem; }
 
-  /* Tall end screens (e.g. variants with a capture form) must scroll on
-     small screens; centering + overflow clips the top unreachably. */
-  #end-screen { padding: 1.5rem; overflow-y: auto; justify-content: flex-start; }
-  #end-screen > * { flex-shrink: 0; }
+  #end-screen { padding: 1.5rem; }
   .end-subtitle { margin-bottom: 2rem; }
   .end-stats { gap: 1.25rem; flex-wrap: wrap; justify-content: center; margin-bottom: 1.5rem; }
   .end-stat-value { font-size: 1.8rem; }
@@ -435,4 +434,16 @@ body {
 @media (max-width: 640px) {
   #meeting-section { margin-top: 2rem; }
   .meeting-heading { font-size: 1.25rem; }
+}
+
+.meeting-fallback {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--game-text-dim);
+}
+
+.meeting-fallback a {
+  color: var(--game-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }

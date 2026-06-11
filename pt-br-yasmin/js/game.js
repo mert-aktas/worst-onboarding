@@ -134,6 +134,7 @@ const Game = {
   endGame() {
     this.stopTimer();
     this.state = 'end';
+    window.scrollTo(0, 0);
 
     document.getElementById('hud').classList.add('hidden');
     document.querySelectorAll('.level-container').forEach(el => el.classList.add('hidden'));
@@ -191,6 +192,7 @@ const Game = {
   // ── Restart ───────────────────────────────────────────
   restart() {
     track('play_again');
+    window.scrollTo(0, 0);
     document.getElementById('end-screen').classList.add('hidden');
     document.querySelectorAll('.level-container').forEach(el => {
       el.classList.add('hidden');
