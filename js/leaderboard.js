@@ -149,3 +149,6 @@ const LB = (() => {
 
   return { startRun, onGameEnd, fetchTop, fmtTime, STR, LANG };
 })();
+
+// const doesn't attach to window; the game.js hooks check window.LB
+window.LB = LB;
