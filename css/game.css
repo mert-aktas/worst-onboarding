@@ -434,6 +434,13 @@ body {
 @media (max-width: 640px) {
   #meeting-section { margin-top: 2rem; }
   .meeting-heading { font-size: 1.25rem; }
+  /* The widget's booking-form step is ~1330px tall on narrow screens but
+     HubSpot's embed script doesn't grow the iframe past the first view,
+     leaving Confirm inside an inner scroll region iOS can't touch-scroll.
+     Oversize the iframe so the whole flow renders without inner scrolling;
+     the widget background is transparent, unused space is invisible. */
+  .meetings-iframe-container,
+  .meetings-iframe-container iframe { min-height: 1450px !important; }
 }
 
 .meeting-fallback {
