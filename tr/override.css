@@ -166,3 +166,31 @@
   #capture-section .capture-heading { font-size: 21px; }
   #capture-section .capture-subtext { font-size: 14px; margin: 0 auto 16px; }
 }
+
+/* ── Progressive difficulty reveal (TR only) ───────────────────────────
+   L2 and L4 hide their real exit. After the player engages with the trap
+   a couple of times, surface the exit so nobody gets permanently stuck.
+   Thresholds live in tr/js/levels.js (L2: 2 fake submits, L4: 3 dead-end clicks). */
+@keyframes woe-exit-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.5; }
+}
+
+/* L2: tiny grey "şimdilik atla" grows + turns into a clear blue link (sits on a WHITE card, so dark/colored, not white) */
+.l2-skip-link span.l2-skip-reveal {
+  color: #5378F5;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  animation: woe-exit-pulse 1.3s ease-in-out 3;
+}
+
+/* L4: near-invisible footer exit becomes findable after repeated dead ends */
+.l4-hidden-link.l4-hidden-reveal {
+  color: #6b7280;
+  font-size: 0.72rem;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  animation: woe-exit-pulse 1.3s ease-in-out 3;
+}
