@@ -233,7 +233,8 @@ const Levels = {
       r3.className = val.length === 12 ? 'l2-rule l2-rule-pass' : 'l2-rule';
     });
 
-    // Fake submit does nothing useful
+    // Fake submit does nothing useful - but after 2 attempts, surface the real "skip" exit (difficulty ease)
+    let l2FakeSubmitCount = 0;
     document.getElementById('l2-fake-submit').addEventListener('click', () => {
       const btn = document.getElementById('l2-fake-submit');
       btn.textContent = 'Submitting...';
@@ -241,6 +242,10 @@ const Levels = {
         btn.textContent = 'Error: Blood type is required';
         setTimeout(() => btn.textContent = 'Maybe Later', 2000);
       }, 1500);
+      l2FakeSubmitCount++;
+      if (l2FakeSubmitCount >= 2) {
+        document.getElementById('l2-real-submit').classList.add('l2-skip-reveal');
+      }
     });
 
     // Real submit is the tiny "skip for now" link
@@ -447,6 +452,11 @@ const Levels = {
     let clickCount = 0;
     const addClickFeedback = (message) => {
       clickCount++;
+      // After 3 dead-end clicks, surface the real (hidden) footer exit (difficulty ease)
+      if (clickCount >= 3) {
+        const exit = document.getElementById('l4-create-project');
+        if (exit) exit.classList.add('l4-hidden-reveal');
+      }
       const existing = container.querySelector('.l4-feedback');
       if (existing) existing.remove();
 

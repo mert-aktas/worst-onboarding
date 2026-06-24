@@ -958,3 +958,34 @@
   max-width: none;
 }
 .l3-tooltip-mobile::before { display: none; }
+
+
+/* -- Progressive difficulty reveal (all variants) ----------------------
+   L2 and L4 hide their real exit. After the player engages with the trap
+   a couple of times, the matching js/levels.js surfaces the exit so nobody
+   gets permanently stuck. Thresholds live in each variant's js/levels.js
+   (L2: 2 fake submits -> .l2-skip-reveal; L4: 3 dead-end clicks -> .l4-hidden-reveal).
+   Inert until that class is added, so it only activates where the JS opts in. */
+@keyframes woe-exit-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.5; }
+}
+
+/* L2: tiny grey "skip for now" grows + turns into a clear blue link (sits on a white card) */
+.l2-skip-link span.l2-skip-reveal {
+  color: #5378F5;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  animation: woe-exit-pulse 1.3s ease-in-out 3;
+}
+
+/* L4: near-invisible footer exit becomes findable after repeated dead ends */
+.l4-hidden-link.l4-hidden-reveal {
+  color: #6b7280;
+  font-size: 0.72rem;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  animation: woe-exit-pulse 1.3s ease-in-out 3;
+}
