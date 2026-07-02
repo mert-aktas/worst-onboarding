@@ -117,9 +117,11 @@ function track(name, params = {}) {
   } catch (e) { /* ignore */ }
 }
 
-// Outbound CTA clicks (title footer + end screen link to userguiding.com).
+// Outbound CTA clicks to the marketing site (title footer + end-screen "Fix it" link).
+// Excludes games.userguiding.com so cross-links to other games (e.g. the WOE 2 button)
+// fire only their own event, not cta_click / its LinkedIn conversion.
 document.addEventListener('click', (e) => {
-  const link = e.target.closest('a[href*="userguiding.com"]');
+  const link = e.target.closest('a[href*="userguiding.com"]:not([href*="games.userguiding.com"])');
   if (link) track('cta_click', { link_url: link.href });
 });
 
