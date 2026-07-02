@@ -194,7 +194,7 @@ const Game = {
     const time = this.formatTime(this.timer);
     const clicks = this.rageClicks;
 
-    const text = `I just survived the Worst Onboarding Ever.\n\n⏱ ${time} minutes | 💀 ${clicks} rage clicks | Patience: "${label}"\n\nCan you beat me? Try here: https://mert-aktas.github.io/worst-onboarding/\n\n#WorstOnboardingEver`;
+    const text = `I just survived the Worst Onboarding Ever.\n\n⏱ ${time} minutes | 💀 ${clicks} rage clicks | Patience: "${label}"\n\nCan you beat me? Try here: https://games.userguiding.com/worst-onboarding/\n\n#WorstOnboardingEver`;
     const linkedInUrl = 'https://www.linkedin.com/feed/?shareActive=true&text=' + encodeURIComponent(text);
 
     // Copy share image to clipboard, then countdown, then open LinkedIn

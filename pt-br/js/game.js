@@ -181,7 +181,7 @@ const Game = {
     const time = this.formatTime(this.timer);
     const clicks = this.rageClicks;
 
-    const text = `Acabei de sobreviver ao Pior Onboarding de Todos os Tempos.\n\n⏱ ${time} minutos | 💀 ${clicks} cliques de raiva | Paciência: "${label}"\n\nConsegue me superar? Tente aqui: https://mert-aktas.github.io/worst-onboarding/pt-br/\n\n#WorstOnboardingEver`;
+    const text = `Acabei de sobreviver ao Pior Onboarding de Todos os Tempos.\n\n⏱ ${time} minutos | 💀 ${clicks} cliques de raiva | Paciência: "${label}"\n\nConsegue me superar? Tente aqui: https://games.userguiding.com/worst-onboarding/pt-br/\n\n#WorstOnboardingEver`;
     const linkedInUrl = 'https://www.linkedin.com/feed/?shareActive=true&text=' + encodeURIComponent(text);
 
     // Copy share image to clipboard, then countdown, then open LinkedIn
