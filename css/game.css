@@ -280,6 +280,8 @@ body {
 .end-actions {
   display: flex;
   gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 #share-btn {
@@ -314,6 +316,28 @@ body {
 
 #play-again-btn:hover {
   border-color: var(--game-text-dim);
+}
+
+/* WOE 2 sequel cross-link — its own full-width line under the action buttons */
+.end-woe2-link {
+  flex-basis: 100%;
+  margin-top: 0.25rem;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  padding: 0.85rem 2rem;
+  background: transparent;
+  color: var(--game-text);
+  border: 1px solid var(--game-border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.end-woe2-link:hover {
+  border-color: var(--game-accent);
 }
 
 .end-cta {
@@ -397,7 +421,7 @@ body {
   .end-stat-value { font-size: 1.8rem; }
   .end-best { margin-bottom: 1.5rem; }
   .end-actions { flex-direction: column; width: 100%; max-width: 340px; gap: 0.75rem; }
-  #share-btn, #play-again-btn { width: 100%; padding: 0.9rem 1rem; }
+  #share-btn, #play-again-btn, .end-woe2-link { width: 100%; padding: 0.9rem 1rem; }
   .end-cta { margin-top: 2rem; padding: 0 0.5rem; }
 }
 
