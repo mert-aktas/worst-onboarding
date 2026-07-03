@@ -6,8 +6,8 @@
 const Capture = {
   // ── Config ─────────────────────────────────────────────
   PORTAL_ID: '8289649',
-  FORM_GUID: '23ff4b6d-a7c9-4742-818b-01b509670b27',
-  CALENDAR_URL: 'https://start.userguiding.com/meetings/bmilet',
+  FORM_GUID: '365c3905-dd69-4ce0-879e-496129f82db1',
+  CALENDAR_URL: 'https://meetings.hubspot.com/yasmin-florencio',
   REDIRECT_DELAY_SECONDS: 3,
 
   // ── State ──────────────────────────────────────────────
@@ -50,7 +50,7 @@ const Capture = {
       console.error('HubSpot submit failed:', err);
       errorEl.hidden = false;
       submitBtn.disabled = false;
-      submitBtn.textContent = 'Falar com a Bárbara';
+      submitBtn.textContent = 'Falar com a Yasmin';
     }
   },
 
