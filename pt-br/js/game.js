@@ -18,7 +18,9 @@ const Game = {
   init() {
     document.getElementById('start-btn').addEventListener('click', () => this.start());
     document.getElementById('play-again-btn').addEventListener('click', () => this.restart());
-    document.getElementById('share-btn').addEventListener('click', () => this.share());
+    // share button removed in the 2-col redesign (2026-07-06); share() stays dormant below
+    const woe2Btn = document.getElementById('woe2-btn');
+    if (woe2Btn) woe2Btn.addEventListener('click', () => track('woe2_click'));
 
     // Global rage click tracker
     document.addEventListener('click', (e) => {

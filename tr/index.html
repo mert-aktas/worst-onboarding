@@ -81,34 +81,43 @@
   <!-- ═══ End Screen ═══ -->
   <div id="end-screen" class="hidden">
     <div id="confetti-container"></div>
-    <h1 class="end-title">Hayatta Kaldın.</h1>
-    <p class="end-subtitle">Tüm zorluklara rağmen, dünyanın en kötü onboarding'inden sağ çıktın.</p>
+    <div class="end-grid">
+      <div class="end-left">
+        <h1 class="end-title">Hayatta Kaldın.</h1>
+        <p class="end-subtitle">Tüm zorluklara rağmen, dünyanın en kötü onboarding'inden sağ çıktın.</p>
 
-    <div class="end-stats">
-      <div class="end-stat">
-        <span class="end-stat-value" id="end-time">0:00</span>
-        <span class="end-stat-label">Süre</span>
+        <div class="end-stats">
+          <div class="end-stat">
+            <span class="end-stat-value" id="end-time">0:00</span>
+            <span class="end-stat-label">Süre</span>
+          </div>
+          <div class="end-stat">
+            <span class="end-stat-value" id="end-clicks">0</span>
+            <span class="end-stat-label">Öfke Tıklamaları</span>
+          </div>
+          <div class="end-stat">
+            <span class="end-stat-value" id="end-patience">0</span>
+            <span class="end-stat-label">Sabır Puanı</span>
+          </div>
+        </div>
+
+        <p class="end-patience-label" id="end-patience-label">Zen Ustası</p>
+        <p class="end-best" id="end-best"></p>
+
+        <div class="end-divider"></div>
+
+        <div class="end-actions">
+          <button id="play-again-btn">↻&nbsp;&nbsp;Tekrar Oyna</button>
+          <a id="woe2-btn" class="end-woe2-link" href="https://games.userguiding.com/worst-onboarding-2/tr/" target="_blank" rel="noopener">Devam oyunu çıktı: Dünyanın En Kötü Onboarding'i 2. Daha da kötü. →</a>
+        </div>
       </div>
-      <div class="end-stat">
-        <span class="end-stat-value" id="end-clicks">0</span>
-        <span class="end-stat-label">Öfke Tıklamaları</span>
-      </div>
-      <div class="end-stat">
-        <span class="end-stat-value" id="end-patience">0</span>
-        <span class="end-stat-label">Sabır Puanı</span>
-      </div>
-    </div>
 
-    <p class="end-patience-label" id="end-patience-label">Zen Ustası</p>
-    <p class="end-best" id="end-best"></p>
-
-    <div id="leaderboard-section"></div>
-
+      <div class="end-card">
     <!-- ═══ July 9 Turkish Group Demo CTA (GetContrast embed) ═══ -->
     <!-- A/B test vs the Levent email-capture form. Revert: `git checkout tr/index.html` (committed 1c8cabf) + restore capture.js <script> below. -->
     <div id="capture-section">
       <h2 class="capture-heading">Peki iyi bir onboarding nasıl olur?</h2>
-      <p class="capture-subtext">9 Temmuz'da canlı grup demomuzda UserGuiding'i sıfırdan birlikte kuruyoruz. Ücretsiz ve Türkçe. Aşağıdan kaydol:</p>
+      <p class="capture-subtext">9 Temmuz'da canlı grup demomuzda UserGuiding'i sıfırdan birlikte kuruyoruz. Ücretsiz ve Türkçe. Sürpriz modal yok, garanti.</p>
       <div id="__contrast_registration_ea9b25ea-2bf7-421a-adec-35eabc640ec5" style="width: 100%; height: 620px;"></div>
       <script type="text/javascript">
         (() => {
@@ -136,10 +145,10 @@
         })();
       </script>
     </div>
-
-    <div class="end-actions">
-      <button id="play-again-btn">Tekrar Oyna</button>
+      </div>
     </div>
+
+    <div id="leaderboard-section"></div>
   </div>
 
   <!-- Scripts -->

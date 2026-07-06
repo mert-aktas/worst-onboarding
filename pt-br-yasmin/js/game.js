@@ -18,6 +18,8 @@ const Game = {
   init() {
     document.getElementById('start-btn').addEventListener('click', () => this.start());
     document.getElementById('play-again-btn').addEventListener('click', () => this.restart());
+    const woe2Btn = document.getElementById('woe2-btn');
+    if (woe2Btn) woe2Btn.addEventListener('click', () => track('woe2_click'));
 
     // Global rage click tracker
     document.addEventListener('click', (e) => {

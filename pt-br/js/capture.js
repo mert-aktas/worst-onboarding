@@ -1,5 +1,5 @@
 /**
- * O Pior Onboarding (PT-BR Yasmin): Captura de leads
+ * O Pior Onboarding (PT-BR): Captura de leads
  * UTM capture, HubSpot Forms API submission, calendar redirect.
  */
 
@@ -62,7 +62,7 @@ const Capture = {
       ],
       context: {
         pageUri: window.location.href,
-        pageName: 'Worst Onboarding Ever PT-BR Yasmin'
+        pageName: 'Worst Onboarding Ever PT-BR'
       }
     };
 

@@ -122,7 +122,8 @@ function track(name, params = {}) {
 // fire only their own event, not cta_click / its LinkedIn conversion.
 document.addEventListener('click', (e) => {
   const link = e.target.closest('a[href*="userguiding.com"]:not([href*="games.userguiding.com"])');
-  if (link) track('cta_click', { link_url: link.href });
+  // .capture-consent privacy-policy links are legal boilerplate, not CTA intent
+  if (link && !link.closest('.capture-consent')) track('cta_click', { link_url: link.href });
 });
 
 // Boot the LinkedIn tag on load: captures the base "visited" URL and readies lintrk.
