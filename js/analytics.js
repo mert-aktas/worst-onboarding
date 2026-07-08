@@ -23,7 +23,8 @@ const LI_CONVERSIONS = {
   reached_l4: 29129169,
   reached_l5: 29129177,
   game_complete: 29129185,
-  cta_click: 29129193
+  cta_click: 29129193,
+  lead_submit: 29344849  // shared "WOE Lead" conversion (same ID in WOE2) — fired on capture-form submit
 };
 
 // Boot the Insight Tag once: LinkedIn's standard base snippet. The script's own
@@ -100,6 +101,8 @@ function liDispatch(name, params) {
     liTrack('game_complete');
   } else if (name === 'cta_click') {
     liTrack('cta_click');
+  } else if (name === 'lead_submit') {
+    liTrack('lead_submit');  // email captured on the end-screen form (no virtual URL)
   }
 }
 
