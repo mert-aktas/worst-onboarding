@@ -1,27 +1,42 @@
 /**
- * Dünyanın En Kötü Onboarding (TR): Lead capture
- * UTM capture, HubSpot Forms API submission, calendar redirect.
+ * WOE lead-capture — CANONICAL, config-driven module.
+ *
+ * This file is the single source of truth. It is copied BYTE-IDENTICAL into every
+ * variant's js/ dir of every WOE game (worst-onboarding, worst-onboarding-2, …).
+ * Do NOT edit the per-variant copies — edit THIS file and re-copy (see README.md).
+ *
+ * All per-page differences live in window.CAPTURE_CONFIG (set inline in each
+ * index.html) and in the localized markup. This module carries zero copy and zero
+ * variant-specific values.
+ *
+ * Flow: validate email -> POST to the HubSpot Forms API -> track('lead_submit')
+ * (fans out to GA4 + LinkedIn via analytics.js) -> redirect to the current mode's
+ * destination. The redirect lives HERE, not in HubSpot: a Forms API submit returns
+ * JSON and never redirects the browser, so HubSpot's "redirect after submit" setting
+ * does not apply.
+ *
+ * window.CAPTURE_CONFIG = {
+ *   PORTAL_ID:  '8289649',
+ *   FORM_GUID:  '…',                 // one HubSpot form per language
+ *   PAGE_NAME:  'WOE2 EN',           // HubSpot submission context (game + variant)
+ *   mode:       'demo',              // 'demo' | 'group' — picks the redirect
+ *   redirects:  { demo: 'https://…', group: 'https://…' },
+ *   REDIRECT_DELAY_SECONDS: 3
+ * };
  */
-
 const Capture = {
-  // ── Config ─────────────────────────────────────────────
-  PORTAL_ID: '8289649',
-  FORM_GUID: '2a9e7a38-f4cf-49e5-84bf-34a7ac546624',
-  CALENDAR_URL: 'https://meetings.hubspot.com/laskan/userguiding-meeting-with-levent-askan',
-  REDIRECT_DELAY_SECONDS: 3,
-
-  // ── State ──────────────────────────────────────────────
+  cfg: null,
   ctx: null,
 
-  // ── Init ───────────────────────────────────────────────
   init() {
+    this.cfg = window.CAPTURE_CONFIG || null;
+    if (!this.cfg || !document.getElementById('capture-form')) return;
     this.captureContext();
     this.bindForm();
   },
 
   bindForm() {
     const form = document.getElementById('capture-form');
-    if (!form) return;
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       this.handleSubmit();
@@ -39,18 +54,21 @@ const Capture = {
       return;
     }
 
+    // Preserve the localized button label so we can restore it on error.
+    const originalLabel = submitBtn.textContent;
     errorEl.hidden = true;
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Gönderiliyor…';
+    if (submitBtn.dataset.sending) submitBtn.textContent = submitBtn.dataset.sending;
 
     try {
       await this.submitToHubspot(email);
+      try { if (typeof track === 'function') track('lead_submit'); } catch (e) { /* ignore */ }
       this.showSuccessAndRedirect(email);
     } catch (err) {
       console.error('HubSpot submit failed:', err);
       errorEl.hidden = false;
       submitBtn.disabled = false;
-      submitBtn.textContent = 'Levent\'le Tanış';
+      submitBtn.textContent = originalLabel;
     }
   },
 
@@ -61,11 +79,11 @@ const Capture = {
       ],
       context: {
         pageUri: window.location.href,
-        pageName: 'Worst Onboarding Ever TR'
+        pageName: this.cfg.PAGE_NAME || 'WOE'
       }
     };
 
-    const url = `https://api.hsforms.com/submissions/v3/integration/submit/${this.PORTAL_ID}/${this.FORM_GUID}`;
+    const url = `https://api.hsforms.com/submissions/v3/integration/submit/${this.cfg.PORTAL_ID}/${this.cfg.FORM_GUID}`;
     const res = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -79,43 +97,56 @@ const Capture = {
     return res.json();
   },
 
-  // ── Success state + redirect ───────────────────────────
+  // Build the current mode's redirect URL with UTMs + email merged in. Uses the URL
+  // API so it stays query-safe even when the base already has params (e.g. a
+  // GetContrast group-demo link that ships with ?primaryColor=…&utm_source=…).
+  buildRedirectUrl(email) {
+    const base = (this.cfg.redirects && this.cfg.redirects[this.cfg.mode]) || '';
+    if (!base) return '';
+    const ctx = this.getContext();
+    let url;
+    try {
+      url = new URL(base);
+    } catch (e) {
+      return base;
+    }
+    url.searchParams.set('email', email);
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach((k) => {
+      if (ctx[k]) url.searchParams.set(k, ctx[k]);
+    });
+    return url.href;
+  },
+
   showSuccessAndRedirect(email) {
     const formWrap = document.getElementById('capture-form-wrap');
     const successWrap = document.getElementById('capture-success-wrap');
     const countdownEl = document.getElementById('capture-countdown');
     const fallbackLink = document.getElementById('capture-fallback-link');
 
-    const ctx = this.getContext();
-    const params = new URLSearchParams();
-    params.set('email', email);
-    if (ctx.utm_source)   params.set('utm_source', ctx.utm_source);
-    if (ctx.utm_medium)   params.set('utm_medium', ctx.utm_medium);
-    if (ctx.utm_campaign) params.set('utm_campaign', ctx.utm_campaign);
-    if (ctx.utm_content)  params.set('utm_content', ctx.utm_content);
-    if (ctx.utm_term)     params.set('utm_term', ctx.utm_term);
-    const calendarUrl = `${this.CALENDAR_URL}?${params.toString()}`;
-    fallbackLink.href = calendarUrl;
+    const redirectUrl = this.buildRedirectUrl(email);
+    if (fallbackLink && redirectUrl) fallbackLink.href = redirectUrl;
 
-    formWrap.hidden = true;
-    successWrap.hidden = false;
+    if (formWrap) formWrap.hidden = true;
+    if (successWrap) successWrap.hidden = false;
 
-    let remaining = this.REDIRECT_DELAY_SECONDS;
-    countdownEl.textContent = remaining;
+    // No destination configured (e.g. group mode not yet set) -> show success, stay put.
+    if (!redirectUrl) return;
+
+    let remaining = this.cfg.REDIRECT_DELAY_SECONDS || 3;
+    if (countdownEl) countdownEl.textContent = remaining;
 
     const tick = () => {
       remaining -= 1;
       if (remaining <= 0) {
-        window.location.href = calendarUrl;
+        window.location.href = redirectUrl;
         return;
       }
-      countdownEl.textContent = remaining;
+      if (countdownEl) countdownEl.textContent = remaining;
       setTimeout(tick, 1000);
     };
     setTimeout(tick, 1000);
   },
 
-  // ── UTM Capture ────────────────────────────────────────
   captureContext() {
     const params = new URLSearchParams(window.location.search);
     this.ctx = {
